@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="static/css/chat.css">
+    <link rel="stylesheet" href="static/css/home.css">
+    <script src="https://kit.fontawesome.com/66b922ceef.js" crossorigin="anonymous"></script>
+
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Chat Bar Block -->
+    <div class="chat_bar_collapsible">
+        <button id="chat_button" class ="collapsible" type="button">
+            Chat with us!
+            <i id="chat_icon" class="fa fa-fw fa-comments-o" style="color: #fff;"></i>
+        </button>
+
+        <div class="content">
+            <div class="full_chat_block">
+                <!-- Message Container -->
+                <div class="outer_container">
+                    <div class="chat_container">
+                        <!-- Messages -->
+                        <div id="chatbox">
+                            <h5 id="timestamp"></h5>
+                            <p id="botStarterMsg" class="botText"><span>Loading...</span></p>
+                        </div>
+                        <!-- User input box-->
+                        <div class="chat_bar_input_block">
+                            <div id="user_input">
+                                <input id="textInput" class="input_box" type="text" name="msg" placeholder="Tap 'Enter' to send message">
+                                <p></p>
+                            </div>
+                            <div class="chat_bar_icons">
+                                <i id="chat_icon" class="fa fa-fw fa-heart" onclick="heartBtn()" style="color: crimson;"></i>
+                                <i id="chat_icon" class="fa fa-fw fa-send" onclick="sendBtn()" style="color: #333;"></i>
+                            </div>
+                        </div>
+
+                        <div id="chat_bar_bottom">
+                            <p></p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script
+			  src="https://code.jquery.com/jquery-3.6.0.min.js"
+			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+			  crossorigin="anonymous"></script>
+<script src="/static/scripts/responses.js"></script>
+<script src="/static/scripts/chat.js"></script>
+</body>
+
+</html>
