@@ -15,7 +15,7 @@
 <body>
     <!-- Chat Bar Block -->
     <div class="chat_bar_collapsible">
-        <button id="chat_button" class ="collapsible" type="button">
+        <button id="chat_button" class="collapsible" type="button">
             Chat with us!
             <i id="chat_icon" class="fa fa-fw fa-comments-o" style="color: #fff;"></i>
         </button>
@@ -33,11 +33,13 @@
                         <!-- User input box-->
                         <div class="chat_bar_input_block">
                             <div id="user_input">
-                                <input id="textInput" class="input_box" type="text" name="msg" placeholder="Tap 'Enter' to send message">
+                                <input id="textInput" class="input_box" type="text" name="msg"
+                                    placeholder="Tap 'Enter' to send message">
                                 <p></p>
                             </div>
                             <div class="chat_bar_icons">
-                                <i id="chat_icon" class="fa fa-fw fa-heart" onclick="heartBtn()" style="color: crimson;"></i>
+                                <i id="chat_icon" class="fa fa-fw fa-heart" onclick="heartBtn()"
+                                    style="color: crimson;"></i>
                                 <i id="chat_icon" class="fa fa-fw fa-send" onclick="sendBtn()" style="color: #333;"></i>
                             </div>
                         </div>
@@ -52,130 +54,128 @@
             </div>
         </div>
     </div>
-    <script
-			  src="https://code.jquery.com/jquery-3.6.0.min.js"
-			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-			  crossorigin="anonymous"></script>
-<script>
-var collapsible = document.getElementsByClassName('collapsible')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        var collapsible = document.getElementsByClassName('collapsible')
 
-for(let i = 0; i < collapsible.length; i++) {
-    collapsible[i].addEventListener("click", function(){
-        this.classList.toggle("active")
+        for (let i = 0; i < collapsible.length; i++) {
+            collapsible[i].addEventListener("click", function () {
+                this.classList.toggle("active")
 
-        var content = this.nextElementSibling;
+                var content = this.nextElementSibling;
 
-        if(content.style.maxHeight){
-            content.style.maxHeight = null
-        } else {
-            content.style.maxHeight = content.scrollHeight + 'px'
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null
+                } else {
+                    content.style.maxHeight = content.scrollHeight + 'px'
+                }
+            })
+
         }
-    })
 
-}
+        getTime = () => {
+            let today = new Date();
+            hours = today.getHours()
+            minutes = today.getMinutes()
 
-getTime = () => {
-    let today = new Date();
-    hours = today.getHours()
-    minutes = today.getMinutes()
+            if (hours < 10) {
+                hours = "0" + hours
+            }
+            if (minutes < 10) {
+                minutes = "0" + minutes
+            }
 
-    if(hours < 10) {
-        hours = "0" + hours
-    }
-    if(minutes < 10) {
-        minutes = "0" + minutes
-    }
+            let time = hours + ':' + minutes
+            return time
+        }
 
-    let time = hours + ':' + minutes
-    return time
-}
+        firstBotMessage = () => {
+            let firstMsg = "How's it going?"
 
-firstBotMessage = () => {
-    let firstMsg = "How's it going?"
+            document.getElementById("botStarterMsg").innerHTML = '<p class="botText"><span>' + firstMsg + '</span></p>'
 
-    document.getElementById("botStarterMsg").innerHTML = '<p class="botText"><span>' + firstMsg + '</span></p>'
+            let time = getTime()
 
-    let time = getTime()
+            $("#timestamp").append(time)
+            document.getElementById("user_input").scrollIntoView(false)
+        }
 
-    $("#timestamp").append(time)
-    document.getElementById("user_input").scrollIntoView(false)
-}
+        firstBotMessage()
 
-firstBotMessage()
+        getHardResp = (userText) => {
+            let botResp = getBotResp(userText)
+            let botHtml = '<p class="botText"><span>' + botResp + '</span></p>'
 
-getHardResp = (userText) => {
-    let botResp = getBotResp(userText)
-    let botHtml = '<p class="botText"><span>' + botResp + '</span></p>'
+            $("#chatbox").append(botHtml)
 
-    $("#chatbox").append(botHtml)
+            document.getElementById("chat_bar_bottom").scrollIntoView(true)
+        }
 
-    document.getElementById("chat_bar_bottom").scrollIntoView(true)
-}
+        getResp = () => {
+            let userText = $("#textInput").val()
 
-getResp = () => {
-    let userText = $("#textInput").val()
-
-   if(userText == "") {
-        userText = "You forgot to type a message!"
-    }
-    
-
-    let userHtml = '<p class="userText"><span>' + userText + '</span></p>'
-
-    $("#textInput").val("")
-    $("#chatbox").append(userHtml)
-    document.getElementById("chat_bar_bottom").scrollIntoView(true)
-
-    setTimeout(() => {
-        getHardResp(userText)
-    }, 1000)
-}
-
-btnSendText = (sampleText) => {
-    let userHtml = '<p class="userText"><span>' + sampleText + '</span></p>'
-
-    $("#textInput").val("")
-    $("#chatbox").append(userHtml)
-    document.getElementById("chat_bar_bottom").scrollIntoView(true)
+            if (userText == "") {
+                userText = "You forgot to type a message!"
+            }
 
 
-}
+            let userHtml = '<p class="userText"><span>' + userText + '</span></p>'
 
-sendBtn = () => {
-    getResp()
-}
+            $("#textInput").val("")
+            $("#chatbox").append(userHtml)
+            document.getElementById("chat_bar_bottom").scrollIntoView(true)
 
-heartBtn = () => {
-    btnSendText("Heart clicked!")
-}
+            setTimeout(() => {
+                getHardResp(userText)
+            }, 1000)
+        }
 
-$("#textInput").keypress(function(e) {
-    if(e.which == 13) {
-        getResp()
-    }
-})
-function getBotResp(input) {
-    //rock paper scissors
-    if (input == "rock") {
-        return "paper";
-    } else if (input == "paper") {
-        return "scissors";
-    } else if (input == "scissors") {
-        return "rock";
-    }
+        btnSendText = (sampleText) => {
+            let userHtml = '<p class="userText"><span>' + sampleText + '</span></p>'
 
-    // Simple responses
-    if (input == "hello" || input == "hi") {
-        return "Hello there!";
-    } else if (input == "goodbye") {
-        return "Talk to you later!";
-    } else if (input == "i love you") {
-        return "I love you too!!";
-    }
-    else {
-        return "Try asking something else!";
-    }
-}</script>
+            $("#textInput").val("")
+            $("#chatbox").append(userHtml)
+            document.getElementById("chat_bar_bottom").scrollIntoView(true)
+
+
+        }
+
+        sendBtn = () => {
+            getResp()
+        }
+
+        heartBtn = () => {
+            btnSendText("Heart clicked!")
+        }
+
+        $("#textInput").keypress(function (e) {
+            if (e.which == 13) {
+                getResp()
+            }
+        })
+        function getBotResp(input) {
+            //rock paper scissors
+            if (input == "rock") {
+                return "paper";
+            } else if (input == "paper") {
+                return "scissors";
+            } else if (input == "scissors") {
+                return "rock";
+            }
+
+            // Simple responses
+            if (input == "hello" || input == "hi") {
+                return "Hello there!";
+            } else if (input == "goodbye") {
+                return "Talk to you later!";
+            } else if (input == "i love you") {
+                return "I love you too!!";
+            }
+            else {
+                return "Try asking something else!";
+            }
+        }</script>
 </body>
 
 </html>
